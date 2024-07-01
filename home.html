@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHL Diving Leaderboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 50%;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: center;
+        }
+        button, select {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>NHL Diving Leaderboard</h1>
+    <button onclick="sortByName()">Sort by Name</button>
+    <button onclick="sortByDives()">Sort by Dives</button>
+    <select onchange="navigateToLeaderboard(this.value)">
+        <option value="">Select Leaderboard</option>
+        <option value="regular_season_2019_2020">2019-2020 Regular Season</option>
+        <option value="postseason_2019_2020">2019-2020 Postseason</option>
+        <option value="combined_2019_2020">2019-2020 Regular Season & Postseason Combined</option>
+    </select>
+    <table id="leaderboard">
+        <thead>
+            <tr>
+                <th>Player Name</th>
+                <th>Dives</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Jonathan Marchessault</td><td>9</td></tr>
+            <tr><td>Mathew Barzal</td><td>7</td></tr>
+            <tr><td>Nick Cousins</td><td>7</td></tr>
+            <tr><td>Brendan Lemieux</td><td>6</td></tr>
+            <tr><td>Dylan Larkin</td><td>6</td></tr>
+            <tr><td>Martin Necas</td><td>6</td></tr>
+            <tr><td>Nazem Kadri</td><td>6</td></tr>
+            <tr><td>Oskar Sundqvist</td><td>6</td></tr>
+            <tr><td>Viktor Arvidsson</td><td>6</td></tr>
+            <tr><td>Alex Stalock</td><td>5</td></tr>
+            <tr><td>Alexander Ovechkin</td><td>5</td></tr>
+            <tr><td>Brad Marchand</td><td>5</td></tr>
+        </tbody>
+    </table>
+    <script>
+        let nameAsc = true;
+        let divesAsc = true;
+
+        function sortByName() {
+            const table = document.getElementById('leaderboard').getElementsByTagName('tbody')[0];
+            const rows = Array.from(table.getElementsByTagName('tr'));
+
+            rows.sort((a, b) => {
+                const nameA = a.cells[0].innerText.toUpperCase();
+                const nameB = b.cells[0].innerText.toUpperCase();
+                if (nameA < nameB) return nameAsc ? -1 : 1;
+                if (nameA > nameB) return nameAsc ? 1 : -1;
+                return 0;
+            });
+
+            nameAsc = !nameAsc;
+
+            rows.forEach(row => table.appendChild(row));
+        }
+
+        function sortByDives() {
+            const table = document.getElementById('leaderboard').getElementsByTagName('tbody')[0];
+            const rows = Array.from(table.getElementsByTagName('tr'));
+
+            rows.sort((a, b) => {
+                const divesA = parseInt(a.cells[1].innerText);
+                const divesB = parseInt(b.cells[1].innerText);
+                return divesAsc ? divesA - divesB : divesB - divesA;
+            });
+
+            divesAsc = !divesAsc;
+
+            rows.forEach(row => table.appendChild(row));
+        }
+
+        function navigateToLeaderboard(selectedValue) {
+            if (selectedValue === 'regular_season_2019_2020') {
+                window.location.href = 'regular_season_2019_2020.html';
+            } else if (selectedValue === 'postseason_2019_2020') {
+                window.location.href = 'postseason_2019_2020.html';
+            } else if (selectedValue === 'combined_2019_2020') {
+                window.location.href = 'combined_2019_2020.html';
+            }
+        }
+    </script>
+</body>
+</html>
